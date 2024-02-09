@@ -1,128 +1,65 @@
 Config = {}
 
 
-
---Config.moon = {
---    [1] = {
---        name = "Lua de Sangue",
---        constellation="Lucerna",
---        buffedRole = Config.role.vampire,
---    },
---    [2] = {
---        name = "Lua Cheia",
---        constellation="Pelotrio",
---        buffedRole = Config.role.wolfman,
---    },
---    [3] = {
---        name = "Lua do Caos",
---        constellation="Armara",
---        buffedRole = Config.role.viking,
---    },
---    [4] = {
---        name = "Lua Nova",
---        constellation="Aevitas",
---        buffedRole = Config.role.druid,
---    },
---    [5] = {
---        name = "Lua das Sombras",
---        constellation="Horologium",
---        buffedRole = Config.role.witch,
---    },
---    [6] = {
---        name = "Lua Oculta",
---        constellation="Vorux",
---        buffedRole = Config.role.demon,
---    },
---    [7] = {
---        name = "Lua da sorte",
---        constellation="Aevitas",
---        buffedRole = false,
---        buff={luck = 10}
---    },
---}
---
-
 Config.skills = {
-    --SKILLS DE CURA
-    ["HEAL_AREA"] = {id=0,duration=10,heal=5,animation="",particules={group="",particule=""}},
-    ["HEAL_UNIQUE"] = {id=1,duration=0,heal="full",animation="",particules={group="",particule=""}},
-
-    --SKILLS DE CONTROLE DE GRUPO/TANK
-    ["CC_THUNDER"] = {id=100,duration=0,damage=false,animation="",particules={group="",particule=""}},
-    ["CC_FREEZE"] = {id=101,duration=15,damage=false,animation="",particules={group="",particule=""}},
-    ["CC_FIREPUNCH"] = {id=102,duration=0,damage=false,animation="",particules={group="",particule=""}},
-    ["TANK_FURIA"] = {id=103,duration=30,size=1.15,animation="",particules={group="",particule=""}},
-
-    --SKILLS DE CONTROLE DE DANO
-    ["DAMAGE_FIRE_AREA"] = {id=200,duration=5,damage=5,animation="",particules={group="",particule=""}},
-    ["DAMAGE_FIRE_UNIQUE"] = {id=201,duration=0,damage=50,animation="",particules={group="",particule=""}},
-    ["DAMAGE_WATER_AREA"] = {id=202,duration=5,damage=5,animation="",particules={group="",particule=""}},
-    ["DAMAGE_WATER_UNIQUE"] = {id=203,duration=0,damage=50,animation="",particules={group="",particule=""}},
-
-    --SKILLS DE CONTROLE DE SCAPE
-    ["SCAPE_FLASH"] = {id=300,duration=10,heal=5,animation="",particules={group="",particule=""}},
-    ["SCAPE_PORTAL"] = {id=301,duration=10,heal=5,animation="",particules={group="",particule=""}},
-    ["SCAPE_SPEED"] = {id=302,duration=10,heal=5,animation="",particules={group="",particule=""}},
-    ["SCAPE_INVISIBLE"] = {id=303,duration=10,heal=5,animation="",particules={group="",particule=""}},
-
+    -- SKILLS DE CURA
+    ["HEAL_AREA"] = {name = "HEAL_AREA", id=0, duration=10, heal=5, animation="", particules={group="", particule=""}},
+    
 }
-config.keys = {
-    ["F1"] = 0xA8E3F467,
-    ["F4"] = 0x1F6D95E5,
-    ["F6"] = 0x3C0A40F2, 
-    ["2"] = 0x1CE6D9EB,
-    ["3"] = 0x4F49CC4C,
-    ["4"] = 0x8F9F9E58,
-}
+
+
+
 
 Config.role = {
     vampire = {
-        ["2"] = {Config.skills["HEAL_AREA"]},
-        ["3"] = {},
-        ["4"] = {},
-        ["F1"]= {},
+        ["2"] = Config.skills["HEAL_AREA"],
+        ["3"] = Config.skills["HEAL_AREA"],
+        ["4"] = Config.skills["HEAL_AREA"],
+        ["F1"]= Config.skills["HEAL_AREA"],
     },
-    wolfman = {
-        ["2"] = {},
-        ["3"] = {},
-        ["4"] = {},
-        ["F1"]= {},
+    
+}
+
+
+
+Config.moon = {
+    [1] = {
+        name = "Lua de Sangue",
+        constellation="Lucerna",
+        buffedRole = Config.role.vampire,
     },
-    viking = {
-        ["2"] = {Config.skills["CC_THUNDER"]},
-        ["3"] = {Config.skills["TANK_FURIA"]},
-        ["4"] = {Config.skills["SCAPE_SPEED"]},
-        ["F1"]= {},
+    [2] = {
+        name = "Lua Cheia",
+        constellation="Pelotrio",
+        buffedRole = Config.role.wolfman,
     },
-    druid = {
-        ["2"] = {Config.skills["HEAL_SOLO"]},
-        ["3"] = {Config.skills["HEAL_AREA"]},
-        ["4"] = {},
-        ["F1"]= {},
-        ["F2"]= {},
-        ["F3"]= {},
+    [3] = {
+        name = "Lua do Caos",
+        constellation="Armara",
+        buffedRole = Config.role.viking,
     },
-    witch = {
-        skillDamage = {},
-        skillDefence = {Config.skills["HEAL_UNIQUE"]},
-        skillScape = {Config.skills["SCAPE_FLASH"]},
-        pedAnimal=""
+    [4] = {
+        name = "Lua Nova",
+        constellation="Aevitas",
+        buffedRole = Config.role.druid,
     },
-    demon = {
-        skillDamage = {Config.skills["DAMAGE_FIRE_AREA"]},
-        skillDefence = {Config.skills["CC_FIREPUNCH"]},
-        skillScape = {Config.skills["SCAPE_PORTAL"]},
-        pedAnimal=""
+    [5] = {
+        name = "Lua das Sombras",
+        constellation="Horologium",
+        buffedRole = Config.role.witch,
     },
-    HUMAN_TEMPORARY= {
-        skillDamage = false,
-        skillDefence = false,
-        skillScape = false,
-        pedAnimal=false
+    [6] = {
+        name = "Lua Oculta",
+        constellation="Vorux",
+        buffedRole = Config.role.demon,
+    },
+    [7] = {
+        name = "Lua da sorte",
+        constellation="Aevitas",
+        buffedRole = false,
+        buff={luck = 10}
     },
 }
---
---
 
 
 

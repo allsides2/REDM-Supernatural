@@ -17,6 +17,7 @@ client_scripts {
 	--"client/transform.lua",
 	"client/ghost.lua",
 	"client/marker.lua",
+	"client/wolf.lua",
 	--"client/fireSpell.lua",
 	"client/scale.lua",
 	"client.lua"

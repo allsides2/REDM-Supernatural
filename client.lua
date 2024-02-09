@@ -8,6 +8,7 @@ local skill3 = nil
 local skill4 = nil
 
 
+
 RegisterNetEvent('supernatural:isSupernatural')
 AddEventHandler('supernatural:isSupernatural', function()
     isSupernatural = true
@@ -19,7 +20,7 @@ end)
 
 Citizen.CreateThread(function()
 	while true do
-        Citizen.Wait(60000)
+        Citizen.Wait(5000)
         if not isSupernatural then
 	        TriggerServerEvent('supernatural:init',source)
             print("verificando sobrenatural")
@@ -28,86 +29,70 @@ Citizen.CreateThread(function()
 end)
 
 Citizen.CreateThread(function()
-	while true do
-		Citizen.Wait(10000)
+    while true do
+        Citizen.Wait(10000)
         if isSupernatural then
             local foundClass = false
             for className, classData in pairs(Config.role) do
                 if playerRole == className then
                     foundClass = true
                     print("é sobrenatural")
-                    print("classe:".. className)
+                    print("classe: " .. className)
 
                     for key, skill in pairs(classData) do
-                        print("tecla:", key)
-                        if Config.skills[skill] then
-                            if key == 1 then
+                        print("tecla: " .. key)
+                        if true then
+                            if key == "2" then
                                 skill2 = skill
-                            elseif key == 2 then
+                                print("Skill: " .. skill.name)
+                            elseif key == "3" then
                                 skill3 = skill
-                            elseif key == 3 then
+                                print("Skill: " .. skill.name)
+                            elseif key == "4" then
                                 skill4 = skill
+                                print("Skill: " .. skill.name)
                             end
-                            print("Skill:", skill)
-
                         else
-                            print("Habilidade não encontrada para:", key)
+                            print("Habilidade não encontrada para: " .. key)
                         end
                     end
                     break
                 end
             end
         else
-            print("NÃO  é sobrenatural")
+            print("NÃO é sobrenatural")
         end
-	end
+    end
 end)
-
 
 
 --binds
 Citizen.CreateThread(function()
 	while true do
+        Citizen.Wait(10)
         if isSupernatural then
-		    Citizen.Wait(0)
-		    if Citizen.InvokeNative(0x91AEF906BCA88877,0, config.keys["2"]) then   -- just pressed 2
-                Skill(skill2)
+		    Citizen.Wait(1)
+		    if Citizen.InvokeNative(0x91AEF906BCA88877,0,0x1CE6D9EB) then   -- just pressed 2
+                print("chamou skill")
+                print(skill2.name)
+                Skill(skill2.name)
 		    end
         end
 	end
 end)
-Citizen.CreateThread(function()
-	while true do
-        if isSupernatural then
-		    Citizen.Wait(0)
-		    if Citizen.InvokeNative(0x91AEF906BCA88877,0, config.keys["3"]) then   -- just pressed 3
-                Skill(skill3)
-		    end
-        end
-	end
-end)
-Citizen.CreateThread(function()
-	while true do
-        if isSupernatural then
-		    Citizen.Wait(0)
-		    if Citizen.InvokeNative(0x91AEF906BCA88877,0, config.keys["3"]) then   -- just pressed 3
-                Skill(skill4)
-		    end
-        end
-	end
-end)
+
 
 
 
 
 
 function Skill(skill)
-    if skill == "CURE_AREA" then
-        return CURE_AREA()
+    if skill == "HEAL_AREA" then
+        print("cure area selecionado")
+        TriggerEvent("skill:HEAL_AREA")
+        return 
     end
-    if skill == "CURE_SOLO" then
-        return CURE_AREA()
-    end
+ 
 
 end
 
