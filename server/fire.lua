@@ -1,28 +1,6 @@
-local VorpCore = {}
-TriggerEvent("getCore",function(core)
-    VorpCore = core
+RegisterServerEvent('fire:server:set_fire')
+AddEventHandler('fire:server:set_fire', function(targetServerId)
+    print("server foi")
+    TriggerClientEvent('fire:client:set_fire',targetServerId)
+
 end)
-
-VorpInv = exports.vorp_inventory:vorp_inventoryApi()
-
-
-
-
-
-RegisterServerEvent("fire:requestfireCreation")
-AddEventHandler('fire:requestfireCreation', function(waypointCoords, fireCoords)
-    TriggerClientEvent('fire:createfire', -1, waypointCoords, fireCoords)
-end)
-
-VorpInv.RegisterUsableItem("clothe2", function(data)  
-    local _source = data.source
-    TriggerClientEvent("vorp_inventory:CloseInv", _source)
-    TriggerClientEvent('fire:useItem', _source)
-end)
-
-
-RegisterCommand("fire", function(source, args, raw)
-    local _source = source
-
-    TriggerClientEvent('fire:useItem', _source)
-end, false)

@@ -1,58 +1,76 @@
-		local new_ptfx_dictionary = "amb_lights"
-		local new_ptfx_name = "amb_arc_lamp_emit"
-
-		local is_particle_effect_active = false
-		local current_ptfx_dictionary = new_ptfx_dictionary
-		local current_ptfx_name = new_ptfx_name
-
-		local current_ptfx_handle_id = false
-
-		local bone_index = 247   -- ["PH_Head"]  = {bone_index = 247, bone_id = 57278},
-
-		local ptfx_offcet_x = 0.0
-		local ptfx_offcet_y = 2.0
-		local ptfx_offcet_z = 0.0
-		local ptfx_rot_x = -90.0
-		local ptfx_rot_y = 0.0
-		local ptfx_rot_z = 0.0
-		local ptfx_scale = 1.0
-		local ptfx_axis_x = 0
-		local ptfx_axis_y = 0
-		local ptfx_axis_z = 0
+local count=-90
+local skill=false
+local TIME_SKILL_FIRE = 0
 
 
-		Citizen.CreateThread(function()
-		   	while true do
-		        Citizen.Wait(0)
-		        if Citizen.InvokeNative(0x91AEF906BCA88877,0, 0x17BEC168) then   -- just pressed E
-		        	if not is_particle_effect_active then
-		        		current_ptfx_dictionary = new_ptfx_dictionary
-						current_ptfx_name = new_ptfx_name
-		        		if not Citizen.InvokeNative(0x65BB72F29138F5D6, GetHashKey(current_ptfx_dictionary)) then -- HasNamedPtfxAssetLoaded
-		        			Citizen.InvokeNative(0xF2B2353BBC0D4E8F, GetHashKey(current_ptfx_dictionary))  -- RequestNamedPtfxAsset
-		        			local counter = 0
-		        			while not Citizen.InvokeNative(0x65BB72F29138F5D6, GetHashKey(current_ptfx_dictionary)) and counter <= 300 do  -- while not HasNamedPtfxAssetLoaded
-		        				Citizen.Wait(0)
-		        			end
-		        		end
-		    			if Citizen.InvokeNative(0x65BB72F29138F5D6, GetHashKey(current_ptfx_dictionary)) then  -- HasNamedPtfxAssetLoaded
-		    				Citizen.InvokeNative(0xA10DB07FC234DD12, current_ptfx_dictionary) -- UseParticleFxAsset
 
-		    				current_ptfx_handle_id = Citizen.InvokeNative(0x9C56621462FFE7A6,current_ptfx_name,PlayerPedId(),ptfx_offcet_x,ptfx_offcet_y,ptfx_offcet_z,ptfx_rot_x,ptfx_rot_y,ptfx_rot_z,bone_index,ptfx_scale,ptfx_axis_x,ptfx_axis_y,ptfx_axis_z) -- StartNetworkedParticleFxLoopedOnEntityBone
-		    				--current_ptfx_handle_id =  Citizen.InvokeNative(0x8F90AB32E1944BDE,current_ptfx_name,PlayerPedId(),ptfx_offcet_x,ptfx_offcet_y,ptfx_offcet_z,ptfx_rot_x,ptfx_rot_y,ptfx_rot_z,ptfx_scale,ptfx_axis_x,ptfx_axis_y,ptfx_axis_z)    -- StartNetworkedParticleFxLoopedOnEntity
-		    				is_particle_effect_active = true
-						else
-							print("cant load ptfx dictionary!")
-		    			end
-		        	else
-		        		if current_ptfx_handle_id then
-							if Citizen.InvokeNative(0x9DD5AFF561E88F2A, current_ptfx_handle_id) then   -- DoesParticleFxLoopedExist
-								Citizen.InvokeNative(0x459598F579C98929, current_ptfx_handle_id, false)   -- RemoveParticleFx
-							end
-						end
-						current_ptfx_handle_id = false
-						is_particle_effect_active = false
-		        	end
-		        end
-		    end
-		end)
+RegisterNetEvent('skill:FIRE_AREA')
+AddEventHandler('skill:FIRE_AREA', function()
+	if TIME_SKILL_FIRE == 0 then
+		TIME_SKILL_FIRE=Config.skills["FIRE_AREA"].cd
+		setFireNearestPlayers()
+		--TriggerServerEvent('fire:server:set_fire',closestPlayer) 
+		--TriggerServerEvent('fire:server:set_fire') 
+		Citizen.InvokeNative(0xA10DB07FC234DD12, "anm_rally") -- UseParticleFxAsset
+		Citizen.InvokeNative(0xE6CFE43937061143,"ent_anim_rally_cross_fire",PlayerPedId(), 0.0, 1.0, -0.5, -90.0, 0, 0.0, 1.0, 0, 0, 0)
+		Citizen.InvokeNative(0xA10DB07FC234DD12, "anm_rally") -- UseParticleFxAsset
+		Citizen.InvokeNative(0xE6CFE43937061143,"ent_anim_rally_cross_fire",PlayerPedId(), 0.0, -1.0, -0.5, -90.0, 0, 0.0, 1.0, 0, 0, 10)
+		Citizen.InvokeNative(0xA10DB07FC234DD12, "anm_rally") -- UseParticleFxAsset
+		Citizen.InvokeNative(0xE6CFE43937061143,"ent_anim_rally_cross_fire",PlayerPedId(), -1.0, 0.0, -0.5, -90.0,-90.0, 0.0, 1.0, 1, 0, 0)
+		Citizen.InvokeNative(0xA10DB07FC234DD12, "anm_rally") -- UseParticleFxAsset
+		Citizen.InvokeNative(0xE6CFE43937061143,"ent_anim_rally_cross_fire",PlayerPedId(), 1.0, 0.0, -0.5, -90.0,90.0, 0.0, 1.0, 1, 0, 0)
+		Citizen.InvokeNative(0xA10DB07FC234DD12, "anm_rally") -- UseParticleFxAsset
+		Citizen.InvokeNative(0xE6CFE43937061143,"ent_anim_rally_cross_fire",PlayerPedId(), -0.75, 0.75, -0.5, -90.0,0.0, 45.0, 1.0, 1, 0, 0)
+		Citizen.InvokeNative(0xA10DB07FC234DD12, "anm_rally") -- UseParticleFxAsset
+		Citizen.InvokeNative(0xE6CFE43937061143,"ent_anim_rally_cross_fire",PlayerPedId(), 0.75, 0.75, -0.5, -90.0,0.0, -45.0, 1.0, 1, 0, 0)
+		Citizen.InvokeNative(0xA10DB07FC234DD12, "anm_rally") -- UseParticleFxAsset
+		Citizen.InvokeNative(0xE6CFE43937061143,"ent_anim_rally_cross_fire",PlayerPedId(), 0.75, -0.75, -0.5, -90.0,90.0, -45.0, 1.0, 1, 0, 0)
+		Citizen.InvokeNative(0xA10DB07FC234DD12, "anm_rally") -- UseParticleFxAsset
+		Citizen.InvokeNative(0xE6CFE43937061143,"ent_anim_rally_cross_fire",PlayerPedId(), -0.75, -0.75, -0.5, -90.0,-90.0, 45.0, 1.0, 1, 0, 0)
+		while true do
+			Citizen.Wait(1000)
+			print(TIME_SKILL_FIRE)
+			TIME_SKILL_FIRE = TIME_SKILL_FIRE-1
+			print("finalizouskill")
+			if TIME_SKILL_FIRE == 0 then return end
+
+		end
+	end
+
+
+end)
+
+
+RegisterNetEvent('fire:client:set_fire')
+AddEventHandler('fire:client:set_fire', function()
+	local target = PlayerPedId()
+
+	Citizen.InvokeNative(0xA10DB07FC234DD12, "anm_fire") -- UseParticleFxAsset
+	Citizen.InvokeNative(0xE6CFE43937061143,"ent_anim_fire_fuel_burst",target, 0.0, 0.0, 0.0, 0.0,0.0, 0.0, 1.0, 0, 0, 0)
+end)
+
+function setFireNearestPlayers()
+    local playerPed = PlayerPedId()
+    local coords = GetEntityCoords(playerPed, true, true)
+    local closestPlayer = nil
+    local closestDistance = 5.0
+    for _, player in pairs(GetActivePlayers()) do
+        local targetPed = GetPlayerPed(player)
+        if targetPed ~= playerPed then
+            local targetCoords = GetEntityCoords(targetPed, true, true)
+            local distance = #(targetCoords - coords)
+            print("Distance to player " .. player .. ": " .. distance)
+            if distance < closestDistance then
+                closestDistance = distance
+                closestPlayer = player
+            end
+        end
+    end
+
+    if closestPlayer then
+		TriggerServerEvent('fire:server:set_fire', GetPlayerServerId(closestPlayer))       
+    end
+end
+
+
+
