@@ -69,9 +69,9 @@ end)
 --binds https://forum.cfx.re/t/keybind-hashes/1666877/2
 Citizen.CreateThread(function()
 	while true do
-        Citizen.Wait(10)
+        Citizen.Wait(1)
         if isSupernatural then
-		    Citizen.Wait(1)
+		    
 		    if Citizen.InvokeNative(0x91AEF906BCA88877,0,0x1CE6D9EB) then   -- just pressed 2
                 print("chamou skill")
                 print(skill2.name)
@@ -81,6 +81,11 @@ Citizen.CreateThread(function()
                 print("chamou skill")
                 print(skill3.name)
                 Skill(skill3.name)
+		    end
+		    if Citizen.InvokeNative(0x91AEF906BCA88877,0,0x8F9F9E58) then   -- just pressed 4
+                print("chamou skill")
+                print(skill3.name)
+                Skill(skill4.name)
 		    end
         end
 	end
@@ -100,6 +105,11 @@ function Skill(skill)
     if skill == "FIRE_AREA" then
         print("FIRE area selecionado")
         TriggerEvent("skill:FIRE_AREA")
+        return 
+    end
+    if skill == "POISON_AREA" then
+        print("FIRE area selecionado")
+        TriggerEvent("skill:POISON_AREA")
         return 
     end
  

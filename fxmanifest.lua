@@ -12,7 +12,7 @@ client_scripts {
 	--"client/portal.lua",
 	--"client/moon.lua",
 	"client/fire.lua",
-	"client/ice.lua",
+	"client/poison.lua",
 	--"client/guarma.lua",
 	--"client/eagle.lua",
 	--"client/transform.lua",

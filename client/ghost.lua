@@ -14,7 +14,7 @@ function toggleGhostMode()
     if not Config.isInGhostMode then
         Config.originalAlpha = GetEntityAlpha(playerPed)
         Config.originalPosition = GetEntityCoords(playerPed)
-        SetEntityAlpha(playerPed, 150)  -- Adjust the transparency value as desired
+        SetEntityAlpha(playerPed, 100)  -- Adjust the transparency value as desired
         SetPlayerInvincible(PlayerId(), Config.godModeEnabled)
         FreezeEntityPosition(playerPed, true)
         Config.isPlayerFrozen = true

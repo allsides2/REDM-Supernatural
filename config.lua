@@ -2,9 +2,9 @@ Config = {}
 
 
 Config.skills = {
-    -- SKILLS DE CURA
-    ["HEAL_AREA"] = {name = "HEAL_AREA", id=0, duration=10,cd=10, heal=5, animation="", particules={group="", particule=""}},
-    ["FIRE_AREA"] = {name = "FIRE_AREA", id=0, duration=10,cd=10, heal=5, animation="", particules={group="", particule=""}},
+    ["HEAL_AREA"] = {name = "HEAL_AREA", duration=10,cd=10, heal=5, animation="", particules={group="", particule=""}},
+    ["FIRE_AREA"] = {name = "FIRE_AREA", duration=10,cd=10, heal=5, animation="", particules={group="", particule=""}},
+    ["POISON_AREA"] = {name = "POISON_AREA", id=0, duration=10,cd=10, heal=5, animation="", particules={group="", particule=""}},
     
 }
 
@@ -15,7 +15,7 @@ Config.role = {
     vampire = {
         ["2"] = Config.skills["HEAL_AREA"],
         ["3"] = Config.skills["FIRE_AREA"],
-        ["4"] = Config.skills["HEAL_AREA"],
+        ["4"] = Config.skills["POISON_AREA"],
         ["F1"]= Config.skills["HEAL_AREA"],
     },
     
