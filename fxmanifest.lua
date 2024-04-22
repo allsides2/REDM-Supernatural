@@ -9,10 +9,11 @@ client_scripts {
 	--"client/raio.lua",
 	"client/cure.lua",
 	"client/events.js",
-	--"client/portal.lua",
+	"client/portal.lua",
 	--"client/moon.lua",
 	"client/fire.lua",
 	"client/poison.lua",
+	--"client/boss.lua",
 	--"client/guarma.lua",
 	--"client/eagle.lua",
 	--"client/transform.lua",
@@ -20,7 +21,10 @@ client_scripts {
 	--"client/marker.lua",
 	--"client/wolf.lua",
 	--"client/fireSpell.lua",
+	--"client/mobs.lua",
+	"client/karma.lua",
 	"client/scale.lua",
+	"client/vampire.lua",
 	"client.lua"
 }
 
@@ -30,8 +34,9 @@ server_scripts {
 	"server/scale.lua",
 	--"server/fireSpell.lua",
 	--"server/guarma.lua",
+	"server/karma.lua",
 	"server/fire.lua",
-	--"server/portal.lua",
+	"server/portal.lua",
 	"server/cure.lua",
 	--"server/transform.lua",
 	--"server/moon.lua",
@@ -39,4 +44,14 @@ server_scripts {
 	--"server/wolf.lua",
 	--"server/wolf.lua"
 	'server.lua',
+}
+
+
+ui_page 'html/index.html'
+
+files {
+	'html/index.html',
+	'html/css.css',
+	'html/js.js',
+
 }

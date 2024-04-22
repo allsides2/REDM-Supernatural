@@ -41,3 +41,34 @@ VorpInv.RegisterUsableItem("pipe", function(data)
     MySQL.query.await('INSERT INTO supernatural (identifier, class, role, transform) VALUES (?, ?, ?, ?)', {identifier, "vampire", 1, "asdasd"})
     
 end)
+
+
+
+
+
+
+RegisterServerEvent('server:set_mana')
+AddEventHandler('server:get_mana', function(num)
+    print("foi____")
+    local _source = source
+    local newMana = num
+    local Character = VORPcore.getUser(_source).getUsedCharacter
+    local identifier = Character.identifier
+    MySQL.query('UPDATE supernatural SET mana = @newMana where identifier = @identifier',{ ['@newMana'] = newMana, ['@identifier'] = identifier  })
+    print("foi")
+end)
+
+
+
+
+RegisterServerEvent('server:get_mana')
+AddEventHandler('server:get_mana', function()
+    local _source = source
+    local Character = VORPcore.getUser(_source).getUsedCharacter
+    local identifier = Character.identifier
+    local Mana = MySQL.query.await('SELECT * FROM supernatural WHERE identifier = ?', {identifier})
+    print(Mana[1].mana)
+
+    TriggerClientEvent('client:get_mana', _source, karma[1].karma)
+
+end)

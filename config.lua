@@ -2,9 +2,9 @@ Config = {}
 
 
 Config.skills = {
-    ["HEAL_AREA"] = {name = "HEAL_AREA", duration=10,cd=10, heal=5, animation="", particules={group="", particule=""}},
-    ["FIRE_AREA"] = {name = "FIRE_AREA", duration=10,cd=10, heal=5, animation="", particules={group="", particule=""}},
-    ["POISON_AREA"] = {name = "POISON_AREA", id=0, duration=10,cd=10, heal=5, animation="", particules={group="", particule=""}},
+    ["HEAL_AREA"] = {name = "HEAL_AREA", duration=10,cd=1, heal=5, animation="", particules={group="", particule=""}},
+    ["FIRE_AREA"] = {name = "FIRE_AREA", duration=10,cd=1, heal=5, animation="", particules={group="", particule=""}},
+    ["POISON_AREA"] = {name = "POISON_AREA", id=0, duration=10,cd=1, heal=5, animation="", particules={group="", particule=""}},
     
 }
 
@@ -65,40 +65,15 @@ Config.moon = {
 
 
 Config.randomLocale = {
-    ["GUARMA"] = {
-        [1] = {100,100,100}, -- nome do lugar
-        [2] = {100,100,100}, -- nome do lugar
-        [3] = {100,100,100}, -- nome do lugar
-        [4] = {100,100,100}, -- nome do lugar
-        [5] = {100,100,100}, -- nome do lugar
+    [1] = {
+        ["cds"] = {100,100,100},
+        [1] = {100,100,100},
+        [2] = {100,100,100},
     },
-    ["GUARMA_SUL"] = {
-        [1] = {100,100,100}, -- nome do lugar
-        [2] = {100,100,100}, -- nome do lugar
-        [3] = {100,100,100}, -- nome do lugar
-        [4] = {100,100,100}, -- nome do lugar
-        [5] = {100,100,100}, -- nome do lugar
-    },
-    ["GUARMA_NORTE"] = {
-        [1] = {100,100,100}, -- nome do lugar
-        [2] = {100,100,100}, -- nome do lugar
-        [3] = {100,100,100}, -- nome do lugar
-        [4] = {100,100,100}, -- nome do lugar
-        [5] = {100,100,100}, -- nome do lugar
-    },
-    ["GUARMA_LESTE"] = {
-        [1] = {100,100,100}, -- nome do lugar
-        [2] = {100,100,100}, -- nome do lugar
-        [3] = {100,100,100}, -- nome do lugar
-        [4] = {100,100,100}, -- nome do lugar
-        [5] = {100,100,100}, -- nome do lugar
-    },
-    ["GUARMA_OESTE"] = {
-        [1] = {100,100,100}, -- nome do lugar
-        [2] = {100,100,100}, -- nome do lugar
-        [3] = {100,100,100}, -- nome do lugar
-        [4] = {100,100,100}, -- nome do lugar
-        [5] = {100,100,100}, -- nome do lugar
+    [2] = {
+        ["cds"] = {100,100,100},
+        [1] = {100,100,100},
+        [2] = {100,100,100},
     },
 
 

@@ -3,11 +3,39 @@ local isSupernatural = false
 local playerSpawn = false
 local playerRole = nil
 
+local checkNUI = true
+
 local skill2 = nil
 local skill3 = nil
 local skill4 = nil
 
 
+local mana = 0
+local onMana = false
+
+local onNui = false
+
+
+Citizen.CreateThread(function()
+	while true do
+        Citizen.Wait(0)
+        if onMana then
+            
+            TriggerEvent('server:get_mana')
+            
+           
+            mana = mana + 5
+            print(mana)
+            TriggerServerEvent('server:set_mana',mana) 
+            Citizen.Wait(10000)
+        end
+	end
+end)
+
+RegisterNetEvent('client:get_mana')
+AddEventHandler('client:get_mana', function(pMana)
+	mana = pMana
+end)
 
 RegisterNetEvent('supernatural:isSupernatural')
 AddEventHandler('supernatural:isSupernatural', function()
@@ -27,6 +55,19 @@ Citizen.CreateThread(function()
         end
 	end
 end)
+Citizen.CreateThread(function()
+	while true do
+        Citizen.Wait(0)
+        if isSupernatural and checkNUI then
+            checkNUI = false
+            Citizen.Wait(15000)
+	        TriggerEvent('karma:nui',"show") 
+            EnableGui(true,"show") 
+            onNui = true
+            onMana = true
+        end
+	end
+end)
 
 Citizen.CreateThread(function()
     while true do
@@ -37,30 +78,30 @@ Citizen.CreateThread(function()
                 if playerRole == className then
                     foundClass = true
                     print("é sobrenatural")
-                    print("classe: " .. className)
+                    --print("classe: " .. className)
 
                     for key, skill in pairs(classData) do
-                        print("tecla: " .. key)
+                        --print("tecla: " .. key)
                         if true then
                             if key == "2" then
                                 skill2 = skill
-                                print("Skill: " .. skill.name)
+                                --print("Skill: " .. skill.name)
                             elseif key == "3" then
                                 skill3 = skill
-                                print("Skill: " .. skill.name)
+                               -- print("Skill: " .. skill.name)
                             elseif key == "4" then
                                 skill4 = skill
-                                print("Skill: " .. skill.name)
+                               -- print("Skill: " .. skill.name)
                             end
                         else
-                            print("Habilidade não encontrada para: " .. key)
+                           -- print("Habilidade não encontrada para: " .. key)
                         end
                     end
                     break
                 end
             end
         else
-            print("NÃO é sobrenatural")
+            --print("NÃO é sobrenatural")
         end
     end
 end)
@@ -69,23 +110,25 @@ end)
 --binds https://forum.cfx.re/t/keybind-hashes/1666877/2
 Citizen.CreateThread(function()
 	while true do
-        Citizen.Wait(1)
+        Citizen.Wait(0)
         if isSupernatural then
-		    
 		    if Citizen.InvokeNative(0x91AEF906BCA88877,0,0x1CE6D9EB) then   -- just pressed 2
                 print("chamou skill")
                 print(skill2.name)
                 Skill(skill2.name)
+                enableSkill("SKILL-2")
 		    end
 		    if Citizen.InvokeNative(0x91AEF906BCA88877,0,0x4F49CC4C) then   -- just pressed 3
                 print("chamou skill")
-                print(skill3.name)
+                --print(skill3.name)
                 Skill(skill3.name)
+                enableSkill("SKILL-3")
 		    end
 		    if Citizen.InvokeNative(0x91AEF906BCA88877,0,0x8F9F9E58) then   -- just pressed 4
                 print("chamou skill")
                 print(skill3.name)
                 Skill(skill4.name)
+                enableSkill("SKILL-4")
 		    end
         end
 	end
@@ -112,46 +155,65 @@ function Skill(skill)
         TriggerEvent("skill:POISON_AREA")
         return 
     end
- 
-
 end
 
 
 
 
 
+function EnableGui(state, ui)
+	SetNuiFocus(not state,not state)
+	guiEnabled = state
+	SendNUIMessage({
+		type = ui,
+		enable = state
+	})
+end
+function enableSkill(selectSkill)
+	SendNUIMessage({
+		skill = selectSkill,
+	})
+end
+
+function sendClass()
+	SendNUIMessage({
+		skill_2 = skill2,
+		skill_3 = skill3,
+		skill_4 = skill4,
+	})
+end
 
 
-local music_events = {
+--local teste_11 = true
+--Citizen.CreateThread(function()
+--    while true do
+--        Citizen.Wait(0)
+--        if Citizen.InvokeNative(0x91AEF906BCA88877, 0, 0x17BEC168) then -- E pressionado
+--            EnableGui(true, "show")
+--            TriggerEvent('karma:nui',"show")
+--        end
+--    end
+--end)
 
-    "SUS1_EXIT",
-    "SUS1_FAIL",
-    "WNT4_START",
-    "WNT4_START_2",
-    "WNT4_STOP",
-    "WNT4_TRAIN_JUMP",
-}
+RegisterNUICallback('closeNUI', function()
+	EnableGui(true,"ui")
+    TriggerEvent('karma:nui',"hide")
+end)
+
+RegisterCommand("skills", function()  
+    if onNui == false then
+        TriggerEvent('karma:nui',"show") 
+        EnableGui(true, "show") 
+        onNui = true 
+
+    elseif onNui == true then
+        TriggerEvent('karma:nui',"hide") 
+        EnableGui(true,"hide") 
+        onNui = false 
+    end                 
+end)
 
 
-local currentlyPlaying = false
-
-RegisterCommand("playmusic", function()
-    if not currentlyPlaying then
-        currentlyPlaying = true
-        TriggerEvent("chatMessage", "SYSTEM", {255, 0, 0}, "Playing music events for 5 seconds each.")
-        
-
-        for _, event in ipairs(music_events) do
-            TriggerEvent("chatMessage", "SYSTEM", {255, 0, 0}, "Music: "..event)
-            Citizen.InvokeNative(0x1E5185B72EF5158A, event)  -- PREPARE_MUSIC_EVENT
-            Citizen.InvokeNative(0x706D57B0F50DA710, event)  -- TRIGGER_MUSIC_EVENT
-            Wait(5000)  -- Wait for 5 seconds
-            Citizen.InvokeNative(0x1E5185B72EF5158A, event .. "_STOP")  -- PREPARE_MUSIC_EVENT_STOP
-            Citizen.InvokeNative(0x706D57B0F50DA710, event .. "_STOP")  -- TRIGGER_MUSIC_EVENT_STOP
-        end
-
-        currentlyPlaying = false
-    else
-        TriggerEvent("chatMessage", "SYSTEM", {255, 0, 0}, "Music is already playing.")
-    end
-end, false)
+RegisterCommand("teste_class", function()  
+    sendClass() 
+end)
